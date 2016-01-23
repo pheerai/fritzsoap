@@ -1,0 +1,8 @@
+{
+	"name": "fritzsoap",
+	"description": "Small SOAP-Client for AVM's FRITZ!Box-es",
+	"authors": ["Oliver Rümpelein"],
+	"license": "MIT",
+	"targetType":"executable",
+	"targetPath":"bin/"
+}
