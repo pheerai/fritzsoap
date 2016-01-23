@@ -1,14 +1,9 @@
 DD = dmd
-RELEASEFLAGS = -release -O
-DEBUGFLAGS = -g -unittest -w
-DEVFLAGS = -unittest -w
-DDFLAGS = -od"./bin/obj/" -of"./bin/"
+DDFLAGS = -w -unittest -of"./bin/fritzsoap" -od".bin/obj/"
+MAINFLAGS = $(DDFLAGS)
 
-release :
-	$(DD) $(RELEASEFLAGS)  src/fritzsoap.d
+all:
+	$(DD) $(MAINFLAGS) src/soapsocket.d src/fritzsoap.d 
 
-debug:
-	$(DD) $(DEBUGFLAGS) -of"bin/fritzsoap" src/fritzsoap.d
-
-dev:
-	$(DD) $(DDFLAGS) -of"bin/fritzsoap" src/fritzsoap.d
+clean:
+	rm bin/fritzsoap
