@@ -4,5 +4,8 @@
 	"authors": ["Oliver Rümpelein"],
 	"license": "MIT",
 	"targetType":"executable",
-	"targetPath":"bin/"
+	"targetPath":"bin/",
+	"dependencies": {
+		"kxml": "~>1.0.1"
+	}
 }
