@@ -1,56 +1,39 @@
+/**
+ * Authors: Oliver Rümpelein
+ * Date: 2016-01-24
+ * License: MIT
+ */
+/*********
+ * Basic fritzsoap frontend
+ *
+ * Querys THost:TPort for Informations specified in TAction
+ *
+ * Writes actions specified in TAction to stdout,
+ * in the form ["desc1": "value1", "desc2": "value2"]
+ */
+
 import std.stdio;
-import std.socket;
-import std.conv;
-import std.exception: enforce;
 import soapsocket;
-//extern soapsocket;
 
-
-enum string Host = "shark";
-enum string Port = "49000";
-enum string BaseControlUrl = "/igdupnp/control/";
-enum string ServiceControlName = "WANCommonIFC1";
-enum string UpnpService = "WANCommonInterfaceConfig:1";
-enum string UpnpAction = "GetCommonLinkProperties";
+/********* 
+ * These replace arguments
+ *
+ * THost:    Hostname or IP of router to Query
+ * TPort:    SOAP-Port, usually 49000
+ * TAction:  Contains one or severall Actions as given in
+ *           soaptypes
+ */
+enum string THost = "10.166.0.2";
+/// ditto
+enum string TPort = "49000";
+/// ditto
+enum Actions[] TAction = [Actions.GetDownstream, Actions.GetUpstream, Actions.GetConnStatus , Actions.GetExtIP];
 
 void main() {
-  // In case of hostname: get addresses, but IPv4 only
-  auto addresses = getAddress(Host, 49000);
-  // addresses is of type Address[]
-  // Continue if there was a match
-  enforce(addresses.length != 0, "Could not resolve Hostname");
-  Socket sock;
-  scope(exit) sock.close();
+  // Usally: ask for Host, port by arguments
+  // ToDo: Argument parsing
   
-  foreach (address; addresses) {
-	try {
-	  sock = new TcpSocket(address); // Use first entry for now, later let user select;
-	  writeln("Using ", address );
-	  break;
-	}
-	catch(std.socket.SocketOSException) {
-	  continue;
-	}
-	assert(false, "No replying Host found");
-  }
-
-  auto soap = new soapsocket.SoapAction(sock, Host,
-										Port, BaseControlUrl,
-										ServiceControlName, UpnpService,
-										UpnpAction);
-  soap.request();
-  auto reply = soap.receive();
-  writefln("%s", reply);
-  writeln();
-  
-  auto soapIp = new soapsocket.SoapAction(sock, Host,
-										  Port, BaseControlUrl,
-										  "WANIPConn1", "WANIPConnection:1",
-										  "GetExternalIPAddress");
-  soapIp.request();
-  reply = soapIp.receive();
-	
-
-  sock.close();
-  writefln("%s", reply);
+  auto soap = new soapsocket.SoapAction(THost, TPort, TAction);
+  string[string] replies = soap.getReplies();
+  writeln(replies);
 }
