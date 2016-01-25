@@ -24,7 +24,7 @@ class SoapAction {
   
 public:
   /**
-   * Create a prepared instance for SOAP-actions.
+   * Executes SOAP-actions.
    * 
    * Params:
    *    host = Hostname/IP of router
@@ -63,7 +63,7 @@ public:
    * Get query results.
    *
    * Returns:
-   *    Associative array of the form `[Action: "reply1", …]`
+   *    Associative array of the form `[<Action>: "reply1", …]`
    */
   string[SoapActionData] getReplies() {
 	return this.reply;

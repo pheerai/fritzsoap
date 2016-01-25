@@ -9,7 +9,6 @@
  * Querys THost:TPort for Informations specified in TAction
  *
  * Writes actions specified in TAction to stdout,
- * in the form ["desc1": "value1", "desc2": "value2"]
  */
 
 import std.stdio;
@@ -18,7 +17,7 @@ import soapsocket;
 /********* 
  * These replace arguments
  *
- * THost:    Hostname or IP of router to Query
+ * THost:    Hostname or IP of router to query, usually fritz.box or 192.168.1.1
  * TPort:    SOAP-Port, usually 49000
  * TAction:  Contains one or severall Actions as given in
  *           soaptypes

@@ -24,7 +24,7 @@ public:
    *    argument = Name of tag to seach for
    *
    * Enforces:
-   *    `text` has to be valid XML and must contain exactly one leaf of type `result`
+   *    `text` has to be valid XML and (currently) must contain exactly one leaf of type `result`
    */
   this(in string text, in string argument) {
 	auto xml= readDocument(text);

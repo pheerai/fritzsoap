@@ -38,7 +38,7 @@ public:
    * Execute a SoapQuery
    *
    * This gets the data from tho router using a HTTP-Socket,
-   * then creates a parser and returns its result.
+   * then creates a parser-class and returns its result.
    *
    * Params:
    *    action = The action to perform
