@@ -1,5 +1,7 @@
 module soaptypes;
 
+import std.format;
+
 enum Actions {GetExtIP, GetUpstream, GetDownstream, GetConnStatus};
 
 struct SoapActionData {
@@ -8,6 +10,15 @@ struct SoapActionData {
   string action;
   string argument;
   string description;
+  final string toString() const{
+	return description;
+  }
+
+  final void toString(scope void delegate(const(char)[]) sink,
+					  FormatSpec!char fmt) const
+  {
+	sink.formatValue(description, fmt);
+  }
 }
 
 enum SoapActionData SoapGetExtIP = {"/igdupnp/control/WANIPConn1",

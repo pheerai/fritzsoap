@@ -10,6 +10,8 @@ void main() {
   // ToDo: Argument parsing
 
   auto soap = new soapsocket.SoapAction(THost, TPort, TAction);
-  string[string] replies = soap.getReplies();
-  writeln(replies);
+  string[SoapActionData] replies = soap.getReplies();
+  foreach(key, val; replies) {
+	writefln("%-10s:%18s", key, val);
+  }
 }

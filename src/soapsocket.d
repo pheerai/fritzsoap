@@ -12,7 +12,7 @@ class SoapAction {
   string port;
   string url;
   Actions[] actions;
-  string[string] reply;
+  string[SoapActionData] reply;
   
 public:
   this(in string host, in string port,
@@ -22,9 +22,6 @@ public:
 	this.port = port;
 	this.url = host~":"~port;
 	this.actions = actions.dup();
-  }
-
-  string[string] getReplies() {
 	foreach(action; actions) {
 	  SoapActionData lAction;
 	  final switch(action) {
@@ -43,11 +40,14 @@ public:
 		}
 	  import std.stdio;
 	  auto query = new SoapQuery(lAction, this.url);
-	  this.reply[lAction.description] ~= to!string(query);
+	  this.reply[lAction] = to!string(query);
 	}
-	return this.reply;
   }
-		  
+
+  string[SoapActionData] getReplies() {
+	return reply;
+  }
+  
   override string toString() const {
 	string result;
 	result ~= format("%-(%s%|\n%)", reply.values);
