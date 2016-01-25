@@ -38,9 +38,6 @@ public:
 	this.port = port;
 	this.url = host~":"~port;
 	this.actions = actions.dup();
-  }
-
-  string[string] getReplies() {
 	foreach(action; actions) {
 	  SoapActionData lAction;
 	  final switch(action) {
@@ -57,14 +54,13 @@ public:
 		  lAction = SoapGetConnStatus;
 		  break;
 		}
-	  import std.stdio;
 	  auto query = new SoapQuery(lAction, this.url);
-	  this.reply[lAction.description] ~= to!string(query);
+	  this.reply[lAction] = to!string(query);
 	}
   }
   
   /**
-   * Execute queries.
+   * Get query results.
    *
    * Returns:
    *    Associative array of the form `[Action: "reply1", …]`
@@ -72,15 +68,15 @@ public:
   string[SoapActionData] getReplies() {
 	return this.reply;
   }
-		  
+  
+  /** 
+   * Returns string represesentation.
+   * 
+   * Returns:
+   *    String of the form
+   *    `reply1\nreply2`
+   */
   override string toString() const {
-	/** 
-	 * Returns string represesentation.
-	 * 
-	 * Returns:
-	 *    String of the form
-	 *    `reply1\nreply2`
-	 */
 	string result;
 	result ~= format("%-(%s%|\n%)", reply.values);
 	return result;

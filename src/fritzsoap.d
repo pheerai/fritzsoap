@@ -32,8 +32,9 @@ enum Actions[] TAction = [Actions.GetDownstream, Actions.GetUpstream, Actions.Ge
 void main() {
   // Usally: ask for Host, port by arguments
   // ToDo: Argument parsing
-  
   auto soap = new soapsocket.SoapAction(THost, TPort, TAction);
-  string[string] replies = soap.getReplies();
-  writeln(replies);
+  string[SoapActionData] replies = soap.getReplies();
+  foreach(key, val; replies) {
+	writefln("%-10s:%18s", key, val);
+  }
 }
